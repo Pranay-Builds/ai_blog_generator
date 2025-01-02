@@ -1,0 +1,23 @@
+# Ignore everything by default
+/*
+
+# Do not ignore these specific files and directories
+!.gitignore
+!README.md
+!ai_blog_app/
+!blog_generator/
+!templates/
+
+# Ignore virtual environments, logs, etc.
+.venv/
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.db
+*.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+media/

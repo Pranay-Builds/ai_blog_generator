@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Blog Generator By Pranay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100 font-sans antialised">
+    <!-- Navbar -->
+     <nav class="bg-gray-800 p-4 text-white flex justify-between">
+        <div>
+            <h1 class="text-3xl font-bold mb-3">AI Blog Generator</h1>
+            <p>Made by <a href="https://github.com/Pranay-Builds" target="_blank"
+                class="underline">Pranay</a></p>
+        </div>
+            <a href="#"
+            class="text-white hover:text-gray-300 hover:underline text-1xl">Logout</a>
+     </nav>
+
+     <br>
+
+     <!-- Main Body -->
+      <div class="flex-grow container mx-auto px-4 sm:px-0">
+        <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md transition-transform transform hover:scale-105 flex flex-col">
+            <!-- Intro Section-->
+            <div class="bg-white p-3 rounded-lg shadow-sm text-center">
+                <h2 class="text-3xl font-bold mb-3 text-gray-800">Welcome to AI Blog Generator</h2>
+                <p class="mb-3">
+                    I'm Pranay, an aspiring developer passionate about creating innovative projects. 
+                    My current project, AI Blog Generator, is a tool designed to simplify content creation and generate high quality blogs. 
+                    It features AI-powered blog writing, customizable templates, and SEO optimization, making it perfect for bloggers, marketers, and creators. 
+                    With user-friendly design and smart functionalities, it transforms ideas into engaging, high-quality blogs effortlessly.    
+                </p>
+                <p>Copy a link of a YouTube video and paste it in the input field below to generate a blog post.</p>
+            </div>
+
+            <br>
+
+            <!-- Youtube Input Bar -->
+             <div>
+                <h2 class="text-2xl mb-4 text-center">Enter Youtube Video Link</h2>
+                <div class="flex space-x-4">
+                    <input type="url" id="youtube-link" placeholder="Enter Youtuber Video Link" class="flex-grow p-2 border border-gray-600 rounded-lg">
+                    <button id="generateBtn" class="bg-blue-500 text-white font-semibold px-4 py-2 rounded-md hover:bg-blue-600"
+                    >Generate</button>
+                </div>
+             </div>
+
+             <!-- Loading Circle -->
+              <div id="loading-circle" class="load" style="display: none;"></div>
+
+             <!-- Blog -->
+             <section class="mt-10 flex-grow">
+                <h2 class="text-3xl text-center font-semibold text-gray-600">Your Generated AI Blog Post</h2>
+                <div id="generatedBlog" class="mt-2 p-3 text-gray-700 rounded-md">
+                    
+                </div>
+             </section>
+
+
+             <!-- Footer -->
+            </div>
+        </div>
+        <footer class="text-center p-4 text-blaxk mt-6">
+            Made by <a href="https://www.github.com/Pranay-Builds" target="_blank"
+            class="hover:text-gray-700 underline">Pranay</a>
+        </footer>
+</body>
+</html>
