@@ -1,37 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Blog Generator By Pranay</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        @-webkit-keyframes rotate {
+            from {
+                -webkit-transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        .load {
+            width: 100px;
+            height: 100px;
+            margin: 110px auto 0;
+            border: solid 10px #3140e9;
+            border-radius: 50%;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            -webkit-transition: all 0.5s ease-in;
+            -webkit-animation-name: rotate;
+            -webkit-animation-duration: 1.0s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-timing-function: linear;
+
+            transition: all 0.5s ease-in;
+            animation-name: rotate;
+            animation-duration: 1.0s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+    </style>
 </head>
+
 <body class="flex flex-col min-h-screen bg-gray-100 font-sans antialised">
     <!-- Navbar -->
-     <nav class="bg-gray-800 p-4 text-white flex justify-between">
+    <nav class="bg-gray-800 p-4 text-white flex justify-between">
         <div>
             <h1 class="text-3xl font-bold mb-3">AI Blog Generator</h1>
-            <p>Made by <a href="https://github.com/Pranay-Builds" target="_blank"
-                class="underline">Pranay</a></p>
+            <p>Made by <a href="https://github.com/Pranay-Builds" target="_blank" class="underline">Pranay</a></p>
         </div>
-            <a href="#"
-            class="text-white hover:text-gray-300 hover:underline text-1xl">Logout</a>
-     </nav>
+        <a href="logout" class="text-white hover:text-gray-300 hover:underline text-1xl">Logout</a>
+        <h2 class="text-2xl font-semibold">Welcome, {{user.username}}</h2>
+    </nav>
 
-     <br>
+    <br>
 
-     <!-- Main Body -->
-      <div class="flex-grow container mx-auto px-4 sm:px-0">
-        <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md transition-transform transform hover:scale-105 flex flex-col">
+    <!-- Main Body -->
+    <div class="flex-grow container mx-auto px-4 sm:px-0">
+        <div
+            class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md transition-transform transform hover:scale-105 flex flex-col">
             <!-- Intro Section-->
             <div class="bg-white p-3 rounded-lg shadow-sm text-center">
                 <h2 class="text-3xl font-bold mb-3 text-gray-800">Welcome to AI Blog Generator</h2>
                 <p class="mb-3">
-                    I'm Pranay, an aspiring developer passionate about creating innovative projects. 
-                    My current project, AI Blog Generator, is a tool designed to simplify content creation and generate high quality blogs. 
-                    It features AI-powered blog writing, customizable templates, and SEO optimization, making it perfect for bloggers, marketers, and creators. 
-                    With user-friendly design and smart functionalities, it transforms ideas into engaging, high-quality blogs effortlessly.    
+                    I'm Pranay, an aspiring developer passionate about creating innovative projects.
+                    My current project, AI Blog Generator, is a tool designed to simplify content creation and generate
+                    high quality blogs.
+                    It features AI-powered blog writing, customizable templates, and SEO optimization, making it perfect
+                    for bloggers, marketers, and creators.
+                    With user-friendly design and smart functionalities, it transforms ideas into engaging, high-quality
+                    blogs effortlessly.
                 </p>
                 <p>Copy a link of a YouTube video and paste it in the input field below to generate a blog post.</p>
             </div>
@@ -39,33 +87,76 @@
             <br>
 
             <!-- Youtube Input Bar -->
-             <div>
+            <div>
                 <h2 class="text-2xl mb-4 text-center">Enter Youtube Video Link</h2>
                 <div class="flex space-x-4">
-                    <input type="url" id="youtube-link" placeholder="Enter Youtuber Video Link" class="flex-grow p-2 border border-gray-600 rounded-lg">
-                    <button id="generateBtn" class="bg-blue-500 text-white font-semibold px-4 py-2 rounded-md hover:bg-blue-600"
-                    >Generate</button>
+                    <input type="url" id="youtube-link" placeholder="Enter Youtube Video Link"
+                        class="flex-grow p-2 border border-gray-600 rounded-lg">
+                    <button id="generateBtn"
+                        class="bg-blue-500 text-white font-semibold px-4 py-2 rounded-md hover:bg-blue-600">Generate</button>
                 </div>
-             </div>
-
-             <!-- Loading Circle -->
-              <div id="loading-circle" class="load" style="display: none;"></div>
-
-             <!-- Blog -->
-             <section class="mt-10 flex-grow">
-                <h2 class="text-3xl text-center font-semibold text-gray-600">Your Generated AI Blog Post</h2>
-                <div id="generatedBlog" class="mt-2 p-3 text-gray-700 rounded-md">
-                    
-                </div>
-             </section>
-
-
-             <!-- Footer -->
             </div>
+
+            <!-- Loading Circle -->
+            <div id="loading-circle" class="load" style="display: none;"></div>
+
+            <!-- Blog -->
+            <section class="mt-10 flex-grow">
+                <h2 class="text-3xl text-center font-semibold text-gray-600">Your Generated AI Blog Post</h2>
+                <div id="blogContent" class="mt-2 p-3 text-gray-700 rounded-md">
+
+                </div>
+            </section>
+
+
+            <!-- Footer -->
         </div>
-        <footer class="text-center p-4 text-blaxk mt-6">
-            Made by <a href="https://www.github.com/Pranay-Builds" target="_blank"
+    </div>
+    <footer class="text-center p-4 text-blaxk mt-6">
+        Made by <a href="https://www.github.com/Pranay-Builds" target="_blank"
             class="hover:text-gray-700 underline">Pranay</a>
-        </footer>
+    </footer>
+
+
+    <script>
+        document.getElementById('generateBtn').addEventListener('click', async () => {
+
+
+            const youtubeLink = document.getElementById('youtube-link').value;
+            const blogContent = document.getElementById('blogContent');
+
+            if (youtubeLink) {
+                document.getElementById('loading-circle').style.display = 'block';
+
+                blogContent.innerHTML = ''; // Clear previous content
+
+                const endpointUrl = '/generate-blog';
+
+                try {
+                    const response = await fetch(endpointUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ link: youtubeLink })
+                    });
+
+                    const data = await response.json();
+
+                    blogContent.innerHTML = data.content;
+
+                } catch (error) {
+                    console.error("Error occurred:", error);
+                    alert("Something went wrong. Please try again later.");
+
+                }
+                document.getElementById('loading-circle').style.display = 'none';
+            } else {
+                alert("Please enter a YouTube link.");
+            }
+        });
+    </script>
+
 </body>
+
 </html>
