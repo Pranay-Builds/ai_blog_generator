@@ -5,14 +5,13 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json
-from pytube import YouTube
 from django.conf import settings
 import os
 import assemblyai as aai
-from youtubesearchpython import VideosSearch
 import yt_dlp
 import time
 import requests
+from .models import BlogPost
 
 
 @login_required
@@ -28,6 +27,9 @@ def generate_blog(request):
 
         except (KeyError, json.JSONDecodeError):
             return JsonResponse({'error': 'Invalid data sent'}, status=400)
+        
+
+        print("Authenticated User:", request.user)
 
         title = yt_title(yt_link)
         transcript = yt_transcript(yt_link)
@@ -37,6 +39,16 @@ def generate_blog(request):
         blog_content = generate_blog_from_transcript(transcript)
         if not blog_content:
             return JsonResponse({'error': 'Blog content not generated due to a problem, Try again later'}, status=500)
+        
+        new_blog_article = BlogPost.objects.create(
+            user=request.user,
+            title=title,
+            link=yt_link,
+            content=blog_content
+        )
+
+        new_blog_article.save()
+
 
         return JsonResponse({'title': title, 'content': blog_content})
     else:
@@ -70,7 +82,7 @@ def download_audio(yt_link):
 
 def yt_transcript(link):
     audio_file_path = download_audio(link)
-    aai.settings.api_key = "d9c34879abfc427c9acc06c4e3b4a384"
+    aai.settings.api_key = "yourassemblyaiapikey"
 
     transcriber = aai.Transcriber()
     transcript = transcriber.transcribe(audio_file_path)
@@ -84,10 +96,10 @@ def yt_transcript(link):
     else:
         return None
 
-@login_required
+
 def generate_blog_from_transcript(transcript):
     gemini_api_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
-    gemini_api_key = "AIzaSyC5RyGOs_00EQbPSdSY7LllAuPq95SrmcQ"
+    gemini_api_key = "yourgeminiapikey"
 
     headers = {
         "Content-Type": "application/json",
@@ -96,7 +108,7 @@ def generate_blog_from_transcript(transcript):
     payload = {
         "contents": [
             {
-                "parts": [{"text": f"Convert the following YouTube transcript into a well-structured blog post:\n\n{transcript}"}]
+                "parts": [{"text": f"Convert the following YouTube transcript into a well-structured blog post without using any markdown formatting (no asterisks, headers, or other decorations)::\n\n{transcript}\n Blog:"}]
             }
         ]
     }
@@ -117,8 +129,6 @@ def generate_blog_from_transcript(transcript):
             return "Blog content could not be generated."
     else:
         return f"Error: {response.status_code} - {response.text}"
-
-    
 
 def user_login(request):
     if request.method == 'POST':
@@ -160,3 +170,16 @@ def user_signup(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+@login_required
+def blog_list(request):
+    blog_articles = BlogPost.objects.filter(user=request.user)
+    return render(request, "allBlogs.html", {'blog_articles': blog_articles})
+
+@login_required
+def blog_details(request, pk):
+    blog_article = BlogPost.objects.get(id=pk)
+    if request.user == blog_article.user:
+        return render(request, "blog-details.html", {'blog_article': blog_article})
+    else:
+        return redirect('/')

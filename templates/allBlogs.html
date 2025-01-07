@@ -10,34 +10,31 @@
     <nav class="bg-gray-800 p-4 text-white flex justify-between">
         <div>
             <h1 class="text-3xl font-bold mb-3">AI Blog Generator</h1>
-            <p>Made by <a href="https://github.com/Pranay-Builds" target="_blank"
-                class="underline">Pranay</a></p>
         </div>
         <div>
-            <a href="login"
+            <a href="/logout"
             class="text-white hover:text-gray-300 hover:underline text-1xl">Logout</a>
-            <a href="signup" class="text-white hover:text-gray-300 hover:underline text-1xl">Sign Up</a>
+            <a href="/" class="text-white hover:text-gray-300 hover:underline text-1xl">Home</a>
         </div>
      </nav>
 
      <!-- Main Content Container -->
       <div class="container mx-auto mt-10 px-4 sm:px-0">
         <div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
-
             <section>
                 <h2 class="text-2xl mb-4 font-semibold text-center">Your Blog Posts</h2>
-                <div class="space-y-4 mb-3">
-                    <div class="border border-gray-300 p-3 rounded-lg">
-                        <h3 class="text-center text-2xl font-semibold">Blog Post Title 1</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse soluta enim eius quibusdam aliquam odio nihil accusantium repudiandae, architecto, explicabo optio ad saepe quo omnis eum quod nemo illo dignissimos autem, atque porro tempore molestiae! Consequatur, dolorum perferendis maiores consequuntur placeat beatae veniam quia quibusdam dolores suscipit dicta esse minus?</p>
+                <p class="text-2xl mb-4 font-semibold text-center">Click on one of the blog posts to view details</p>
+                {% for blog in blog_articles reversed %}
+                <a href="blog-details/{{blog.id}}">
+                    <div class="space-y-4 mb-3">
+                        <div class="border border-gray-300 p-3 rounded-lg">
+                            <h3 class="text-center text-2xl font-semibold">{{blog.title}}</h3>
+                            <a href="{{blog.link}}" target="_blank" class="text-center mb-2 text-blue">{{blog.link}}</a>
+                            <p>{{blog.content|truncatechars:80}}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="space-y-4 mb-3">
-                    <div class="border border-gray-300 p-3 rounded-lg">
-                        <h3 class="text-center text-2xl font-semibold">Blog Post Title 1</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse soluta enim eius quibusdam aliquam odio nihil accusantium repudiandae, architecto, explicabo optio ad saepe quo omnis eum quod nemo illo dignissimos autem, atque porro tempore molestiae! Consequatur, dolorum perferendis maiores consequuntur placeat beatae veniam quia quibusdam dolores suscipit dicta esse minus?</p>
-                    </div>
-                </div>
+                </a>
+                {% endfor %}
             </section>
         </div>
       </div>
