@@ -18,7 +18,6 @@
             }
         }
 
-
         @-webkit-keyframes rotate {
             from {
                 -webkit-transform: rotate(0deg);
@@ -103,11 +102,9 @@
             <!-- Blog -->
             <section class="mt-10 flex-grow">
                 <h2 class="text-3xl text-center font-semibold text-gray-600">Your Generated AI Blog Post</h2>
-                <div id="blogContent" class="mt-2 p-3 text-gray-700 rounded-md">
-
-                </div>
+                <div id="blogContent" class="mt-2 p-3 text-gray-700 rounded-md"></div>
+                
             </section>
-
 
             <!-- Footer -->
         </div>
@@ -117,11 +114,8 @@
             class="hover:text-gray-700 underline">Pranay</a>
     </footer>
 
-
     <script>
         document.getElementById('generateBtn').addEventListener('click', async () => {
-
-
             const youtubeLink = document.getElementById('youtube-link').value;
             const blogContent = document.getElementById('blogContent');
 
@@ -148,13 +142,13 @@
                 } catch (error) {
                     console.error("Error occurred:", error);
                     alert("Something went wrong. Please try again later.");
-
                 }
                 document.getElementById('loading-circle').style.display = 'none';
             } else {
                 alert("Please enter a YouTube link.");
             }
         });
+
     </script>
 
 </body>
